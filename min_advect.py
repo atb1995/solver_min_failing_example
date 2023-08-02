@@ -26,20 +26,12 @@ x, z = SpatialCoordinate(mesh)
 velocity = as_vector((0.5, 0.0))
 u = Function(W).interpolate(velocity)
 
-g = Constant(9.810616)
-R_d =Constant(287.)
-
-T = Constant(300.0)
-zH = R_d * T / g
-p = Constant(100000.0) * exp(-z / zH)
-
-q = Function(V).interpolate(p / (R_d * T))
-q_init = Function(V).assign(q)
+# Function which varies in z only to return zero increment
+q = Function(V).interpolate(z)
 
 # Only a small number of timesteps requuired for error
 dt = 6.0
 t_max = 2*dt
-q_in = Constant(1.0)
 
 # Upwind DG advection
 dq_trial = TrialFunction(V)
